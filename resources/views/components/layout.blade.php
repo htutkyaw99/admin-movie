@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin - Movie</title>
     <!--     Fonts and icons     -->
@@ -18,10 +18,10 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('assets') }}/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
-    @vite(['resources/sass/styles.scss', 'resources/js/app.js'])
+
 </head>
 
-<body>
+<body class="{{ $bodyClass }}">
 
     {{ $slot }}
 
