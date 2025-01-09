@@ -28,7 +28,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white {{ $activePage == 'users' ? ' active bg-gradient-primary' : '' }} "
-                    href="{{ route('user-management') }}">
+                    href="{{ route('admins.index') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         {{-- <i class="material-icons opacity-10">table_view</i> --}}
                         <span class="material-icons">

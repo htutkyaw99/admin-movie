@@ -1,27 +1,13 @@
 <?php
 
+use App\Http\Controllers\Web\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', function () {
-    return view('admin.dashboard');
+    return view('dashboard.panel');
 })->name('dashboard');
 
-//users
-Route::get('/user-management', function () {
-    return view('admin.user.user-management');
-})->name('user-management');
-
-Route::get('/user-edit', function () {
-    return view('admin.user.user-edit');
-})->name('user-edit');
-
-Route::get('/user-profile', function () {
-    return view('admin.user.user-profile');
-})->name('user-profile');
-
-Route::get('/user-create', function () {
-    return view('admin.user.user-create');
-})->name('user-create');
+Route::resource('admins', AdminController::class);
 
 //movies
 Route::get('/movie-management', function () {

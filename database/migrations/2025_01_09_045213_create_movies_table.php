@@ -18,10 +18,12 @@ return new class extends Migration
             $table->string('image');
             $table->date('release_date');
             $table->integer('rating');
+            $table->string('trailer');
             $table->foreignId('admin_id');
             $table->foreignId('type_id');
             $table->foreignId('director_id');
             $table->foreignId('production_id');
+            $table->softDeletes('deleted_at', precision: 0);
             $table->timestamps();
         });
     }

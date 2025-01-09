@@ -29,7 +29,7 @@
                             Out</span>
                     </a> --}}
                     <div class="avatar avatar-md position-relative">
-                        <a href="{{ route('user-profile') }}">
+                        <a href="{{ route('admins.show', ['admin' => 1]) }}">
                             <img src="{{ asset('assets') }}/img/bruce-mars.jpg" alt="profile_image"
                                 class="w-100 border-radius-lg shadow-sm">
                         </a>

@@ -3,14 +3,14 @@
     <x-admin.sidebar activePage="users"></x-admin.sidebar>
     <div class="main-content position-relative bg-gray-100 max-height-vh-100 h-100">
         <!-- Navbar -->
-        <x-admin.navbar titlePage='Edit User'></x-admin.navbar>
+        <x-admin.navbar titlePage='Create User'></x-admin.navbar>
         <!-- End Navbar -->
         <div class="container-fluid px-2 px-md-4">
             <div class="card card-body mx-3 mx-md-4" style="margin-top: 25px">
                 <div class="row gx-4 mb-2">
                     <div class="col-auto">
-                        <div class="avatar avatar-xl position-relative">
-                            <img src="{{ asset('assets') }}/img/bruce-mars.jpg" alt="profile_image"
+                        <div class="avatar avatar-xl overflow-hidden position-relative">
+                            <img src="https://avatar.iran.liara.run/public/15" alt="profile_image"
                                 class="w-100 border-radius-lg shadow-sm">
                         </div>
                     </div>
@@ -19,7 +19,7 @@
                             <h5 class="mb-1">
                                 {{-- {{ auth()->user()->name }} --}}
                             </h5>
-                            <h3 class="mb-3">Ye Htut Kyaw</h3>
+                            {{-- <h3 class="mb-3">Ye Htut Kyaw</h3> --}}
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <div class="card-header pb-0 p-3">
                         <div class="row">
                             <div class="col-md-8 d-flex align-items-center">
-                                <h6 class="mb-3">Edit your Information</h6>
+                                <h6 class="mb-3">Fill your Information</h6>
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                                 </div>
                             </div>
                         @endif
-                        <form method='POST' action='{{ route('user-edit') }}'>
+                        <form method='POST' action='{{ route('admins.store') }}'>
                             @csrf
                             <div class="row">
 
@@ -114,5 +114,4 @@
         {{-- <x-footers.auth></x-footers.auth> --}}
     </div>
     {{-- <x-plugins></x-plugins> --}}
-
 </x-layout>

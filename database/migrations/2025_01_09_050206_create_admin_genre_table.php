@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('admin_id');
             $table->foreignId('genre_id');
+            $table->string('description');
             $table->timestamps();
         });
     }

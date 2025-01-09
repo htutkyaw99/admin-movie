@@ -20,24 +20,5 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
-
-        Admin::factory(5)->create();
-
-        $roles = ['admin', 'super_admin'];
-
-        foreach ($roles as $role) {
-            Role::factory()->create([
-                'name' => $role
-            ]);
-        }
-
-        $genres = ['horror', 'comedy', 'romance', 'action'];
-
-        foreach ($genres as $genre) {
-            Genre::factory()->create([
-                'name' => $genre,
-                'admin_id' => User::factory()
-            ]);
-        }
     }
 }

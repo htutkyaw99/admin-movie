@@ -16,7 +16,7 @@
                             </div>
                         </div>
                         <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0" href="{{ route('user-create') }}"><i
+                            <a class="btn bg-gradient-dark mb-0" href="{{ route('admins.create') }}"><i
                                     class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New
                                 User</a>
                         </div>
@@ -83,18 +83,23 @@
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">22/03/18</span>
                                             </td>
-                                            <td class="align-middle">
+                                            <td class="align-middle d-flex">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
-                                                    href="{{ route('user-edit') }}" data-original-title=""
-                                                    title="">
+                                                    href="{{ route('admins.edit', ['admin' => 1]) }}"
+                                                    data-original-title="" title="">
                                                     <i class="material-icons">edit</i>
                                                     <div class="ripple-container"></div>
                                                 </a>
-
-                                                <button type="button" class="btn btn-danger btn-link">
-                                                    <i class="material-icons">close</i>
-                                                    <div class="ripple-container"></div>
-                                                </button>
+                                                <form method="POST"
+                                                    action="{{ route('admins.destroy', ['admin' => 1]) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-link"
+                                                        style="margin-left: 5px">
+                                                        <i class="material-icons">close</i>
+                                                        <div class="ripple-container"></div>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                         <tr>
