@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                         @endif
-                        <form method='POST' action='{{ route('admins.store') }}'>
+                        <form method='POST' action='{{ route('movies.store') }}'>
                             @csrf
                             <div class="row">
 

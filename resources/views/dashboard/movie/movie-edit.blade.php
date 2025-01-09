@@ -59,8 +59,9 @@
                                 </div>
                             </div>
                         @endif
-                        <form method='POST' action='{{ route('admins.update') }}'>
+                        <form method='POST' action='{{ route('movies.update', ['movie' => 1]) }}'>
                             @csrf
+                            @method('PUT')
                             <div class="row">
 
                                 <div class="mb-3 col-md-6">
