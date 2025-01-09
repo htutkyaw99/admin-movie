@@ -19,6 +19,10 @@ Route::get('/user-profile', function () {
     return view('admin.user.user-profile');
 })->name('user-profile');
 
+Route::get('/user-create', function () {
+    return view('admin.user.user-create');
+})->name('user-create');
+
 //movies
 Route::get('/movie-management', function () {
     return view('admin.movie.movie-management');
@@ -27,3 +31,7 @@ Route::get('/movie-management', function () {
 Route::get('/movie-edit', function () {
     return view('admin.movie.movie-edit');
 })->name('movie-edit');
+
+Route::get('/movie-create', function () {
+    return view('admin.movie.movie-create');
+})->name('movie-create');

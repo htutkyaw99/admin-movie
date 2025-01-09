@@ -1,13 +1,13 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
     <x-admin.sidebar activePage="users"></x-admin.sidebar>
-    <main class="main-content position-relative max-height-vh-100 border-radius-lg ">
+    <main class="main-content position-relative max-height-vh-100 border-radius-lg " style="overflow-y: hidden">
         <!-- Navbar -->
         <x-admin.navbar titlePage="User Management"></x-admin.navbar>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
-                    <div class="card my-4">
+                    <div class="card mt-4">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                                 <h6 class="text-white mx-3">
@@ -16,7 +16,7 @@
                             </div>
                         </div>
                         <div class=" me-3 my-3 text-end">
-                            <a class="btn bg-gradient-dark mb-0" href="javascript:;"><i
+                            <a class="btn bg-gradient-dark mb-0" href="{{ route('user-create') }}"><i
                                     class="material-icons text-sm">add</i>&nbsp;&nbsp;Add New
                                 User</a>
                         </div>
