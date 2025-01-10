@@ -83,7 +83,7 @@
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">22/03/18</span>
                                             </td>
-                                            <td class="align-middle d-flex" style="margin-left: 5px">
+                                            <td class="align-middle d-flex">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
                                                     href="{{ route('movies.edit', ['movie' => 1]) }}"
                                                     data-original-title="" title="">

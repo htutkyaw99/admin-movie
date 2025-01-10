@@ -2,24 +2,23 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RoleSeeder extends Seeder
+class TypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $roles = ['super_admin', 'admin'];
+        $types = ['Series', 'Movies', 'TV-Shows'];
 
-        foreach ($roles as $role) {
-            DB::table('roles')->insert([
-                'name' => $role
+        foreach ($types as $type) {
+            DB::table('types')->insert([
+                'name' => $type,
             ]);
-        }
+        };
     }
 }

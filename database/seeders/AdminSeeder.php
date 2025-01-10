@@ -16,11 +16,11 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         DB::table('admins')->insert([
-            'name' => 'htutkyaw',
-            'email' => 'htutkyaw@gmail.com',
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
             'image' => fake()->text(200),
-            'role_id' => 2
+            'role_id' => 1
         ]);
 
         Admin::factory(4)->create();
