@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web\Movie;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\MovieRequest;
 use App\Models\Movie;
-use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
@@ -14,11 +13,8 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = Movie::paginate(5);
 
-        return view('dashboard.movie.movie-list', [
-            'movies' => $movies
-        ]);
+        return view('dashboard.movie.movie-list');
     }
 
     /**

@@ -15,15 +15,9 @@
                             </div>
                             <div class="text-end pt-1">
                                 <p class="text-sm mb-0 text-capitalize">Total Users</p>
-                                <h4 class="mb-0">15</h4>
+                                <h4 class="mb-0">{{ $adminsCount }}</h4>
                             </div>
                         </div>
-                        {{-- <hr class="dark horizontal my-0">
-                        <div class="card-footer p-3">
-                            <p class="mb-0 d-none"><span class="text-success text-sm font-weight-bolder">+55%
-                                </span>than
-                                lask week</p>
-                        </div> --}}
                     </div>
                 </div>
                 <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -35,20 +29,14 @@
                             </div>
                             <div class="text-end pt-1">
                                 <p class="text-sm mb-0 text-capitalize">Total Movies</p>
-                                <h4 class="mb-0">150</h4>
+                                <h4 class="mb-0">{{ $moviesCount }}</h4>
                             </div>
                         </div>
-                        {{-- <hr class="dark horizontal my-0">
-                        <div class="card-footer p-3">
-                            <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3% </span>than
-                                lask month</p>
-                        </div> --}}
                     </div>
                 </div>
             </div>
         </div>
     </main>
-    {{-- <x-plugins></x-plugins> --}}
     </div>
     @push('js')
         <script src="{{ asset('assets') }}/js/plugins/chartjs.min.js"></script>

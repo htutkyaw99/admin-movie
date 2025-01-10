@@ -30,21 +30,21 @@
                                                 ID
                                             </th>
                                             <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                PHOTO</th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                NAME</th>
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
+                                                TITLE</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                EMAIL</th>
+                                                DESCRIPTION</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                ROLE</th>
+                                                TYPE</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                CREATION DATE
+                                                RELEASE_DATE
                                             </th>
+                                            <th
+                                                class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
+                                                RATING</th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
                                     </thead>
@@ -58,30 +58,29 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="{{ asset('assets') }}/img/team-2.jpg"
-                                                            class="avatar avatar-sm me-3 border-radius-lg"
-                                                            alt="user1">
-                                                    </div>
-
+                                                <div class="d-flex flex-column justify-content-center text-center">
+                                                    <h6 class="mb-0 text-sm">{{ $movie->name ?? 'Move One' }}</h6>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">John</h6>
-
+                                                <div class="d-flex flex-column justify-content-center text-center">
+                                                    <h6 class="mb-0 text-sm">
+                                                        {{ $movie->description ?? 'Movie Description' }}</h6>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <p class="text-xs text-secondary mb-0">john@creative-tim.com
+                                                <p class="text-xs text-secondary mb-0">
+                                                    {{ $movie->type->name ?? 'Movie Type' }}
                                                 </p>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">Admin</span>
+                                                <span
+                                                    class="text-secondary text-xs font-weight-bold">{{ $movie->release_date ?? '2025 1 2' }}</span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">22/03/18</span>
+                                                <span
+                                                    class="text-secondary text-xs font-weight-bold">{{ '5' }}
+                                                </span>
                                             </td>
                                             <td class="align-middle d-flex">
                                                 <a rel="tooltip" class="btn btn-success btn-link"
@@ -101,237 +100,6 @@
                                                         <div class="ripple-container"></div>
                                                     </button>
                                                 </form>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <p class="mb-0 text-sm">2</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="{{ asset('assets') }}/img/team-3.jpg"
-                                                            class="avatar avatar-sm me-3 border-radius-lg"
-                                                            alt="user2">
-                                                    </div>
-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">Alexa</h6>
-
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <p class="text-xs text-secondary mb-0">
-                                                    alexa@creative-tim.com</p>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">Creator</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">16/06/18</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a rel="tooltip" class="btn btn-success btn-link" href=""
-                                                    data-original-title="" title="">
-                                                    <i class="material-icons">edit</i>
-                                                    <div class="ripple-container"></div>
-                                                </a>
-                                                <button type="button" class="btn btn-danger btn-link"
-                                                    data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
-                                                    <div class="ripple-container"></div>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <p class="mb-0 text-sm">3</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="{{ asset('assets') }}/img/team-4.jpg"
-                                                            class="avatar avatar-sm me-3 border-radius-lg"
-                                                            alt="user3">
-                                                    </div>
-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">Laurent</h6>
-
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <p class="text-xs text-secondary mb-0">
-                                                    laurent@creative-tim.com</p>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">Member</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">30/06/18</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a rel="tooltip" class="btn btn-success btn-link" href=""
-                                                    data-original-title="" title="">
-                                                    <i class="material-icons">edit</i>
-                                                    <div class="ripple-container"></div>
-                                                </a>
-                                                <button type="button" class="btn btn-danger btn-link"
-                                                    data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
-                                                    <div class="ripple-container"></div>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <p class="mb-0 text-sm">4</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="{{ asset('assets') }}/img/team-3.jpg"
-                                                            class="avatar avatar-sm me-3 border-radius-lg"
-                                                            alt="user4">
-                                                    </div>
-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">Michael</h6>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <p class="text-xs text-secondary mb-0">
-                                                    michael@creative-tim.com</p>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">Member</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">16/06/19</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a rel="tooltip" class="btn btn-success btn-link" href=""
-                                                    data-original-title="" title="">
-                                                    <i class="material-icons">edit</i>
-                                                    <div class="ripple-container"></div>
-                                                </a>
-                                                <button type="button" class="btn btn-danger btn-link"
-                                                    data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
-                                                    <div class="ripple-container"></div>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <p class="mb-0 text-sm">5</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="{{ asset('assets') }}/img/team-2.jpg"
-                                                            class="avatar avatar-sm me-3 border-radius-lg"
-                                                            alt="user5">
-                                                    </div>
-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">Richard</h6>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <p class="text-xs text-secondary mb-0">
-                                                    richard@creative-tim.com</p>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">Creator</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">16/06/18</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a rel="tooltip" class="btn btn-success btn-link" href=""
-                                                    data-original-title="" title="">
-                                                    <i class="material-icons">edit</i>
-                                                    <div class="ripple-container"></div>
-                                                </a>
-                                                <button type="button" class="btn btn-danger btn-link"
-                                                    data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
-                                                    <div class="ripple-container"></div>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <p class="mb-0 text-sm">6</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="{{ asset('assets') }}/img/team-4.jpg"
-                                                            class="avatar avatar-sm me-3 border-radius-lg"
-                                                            alt="user6">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">Miriam</h6>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <p class="text-xs text-secondary mb-0">
-                                                    miriam@creative-tim.com</p>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">Creator</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">26/06/18</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a rel="tooltip" class="btn btn-success btn-link" href=""
-                                                    data-original-title="" title="">
-                                                    <i class="material-icons">edit</i>
-                                                    <div class="ripple-container"></div>
-                                                </a>
-                                                <button type="button" class="btn btn-danger btn-link"
-                                                    data-original-title="" title="">
-                                                    <i class="material-icons">close</i>
-                                                    <div class="ripple-container"></div>
-                                                </button>
                                             </td>
                                         </tr>
                                     </tbody>

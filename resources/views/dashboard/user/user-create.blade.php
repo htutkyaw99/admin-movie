@@ -9,7 +9,10 @@
             <div class="card card-body mx-3 mx-md-4" style="margin-top: 25px">
                 <div class="row gx-4 mb-2">
                     <div class="col-auto">
-                        <div class="avatar avatar-xl overflow-hidden position-relative">
+                        <div class="avatar avatar-xl overflow-hidden position-relative" style="margin-left: 5px">
+                            {{-- @if ($admin->image)
+                                <img src="{{ $admin->image }}" alt="">
+                            @endif --}}
                             <img src="https://avatar.iran.liara.run/public/15" alt="profile_image"
                                 class="w-100 border-radius-lg shadow-sm">
                         </div>
@@ -32,31 +35,17 @@
                         </div>
                     </div>
                     <div class="card-body p-3">
-                        @if (session('status'))
-                            <div class="row">
-                                <div class="alert alert-success alert-dismissible text-white" role="alert">
-                                    <span class="text-sm">{{ Session::get('status') }}</span>
-                                    <button type="button" class="btn-close text-lg py-3 opacity-10"
-                                        data-bs-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            </div>
-                        @endif
-                        @if (Session::has('demo'))
-                            <div class="row">
-                                <div class="alert alert-danger alert-dismissible text-white" role="alert">
-                                    <span class="text-sm">{{ Session::get('demo') }}</span>
-                                    <button type="button" class="btn-close text-lg py-3 opacity-10"
-                                        data-bs-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            </div>
-                        @endif
                         <form method='POST' action='{{ route('admins.store') }}'>
                             @csrf
                             <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" name="name" class="form-control border border-2 p-2"
+                                        value=''>
+                                    @error('name')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Email address</label>
@@ -68,40 +57,45 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Name</label>
-                                    <input type="text" name="name" class="form-control border border-2 p-2"
+                                    <label class="form-label">Password</label>
+                                    <input type="password" name="password" class="form-control border border-2 p-2"
                                         value=''>
-                                    @error('name')
+                                    @error('password')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Phone</label>
-                                    <input type="number" name="phone" class="form-control border border-2 p-2"
-                                        value=''>
-                                    @error('phone')
+                                    <label class="form-label">Confirm Password</label>
+                                    <input type="password" name="password_confirmation"
+                                        class="form-control border border-2 p-2" value=''>
+                                    @error('password_confirmation')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Location</label>
-                                    <input type="text" name="location" class="form-control border border-2 p-2"
-                                        value=''>
-                                    @error('location')
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label">Upload user image</label>
+                                        <input class="form-control" type="file" id="formFile">
+                                    </div>
+                                    @error('image')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
 
-                                <div class="mb-3 col-md-12">
-                                    <label for="floatingTextarea2">About</label>
-                                    <textarea class="form-control border border-2 p-2" placeholder=" Say something about yourself" id="floatingTextarea2"
-                                        name="about" rows="4" cols="50"></textarea>
-                                    @error('about')
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Select Role</label>
+                                    <select name="type" class="form-select px-3 py-2"
+                                        aria-label="Default select example">
+                                        <option value="1">Super Admin</option>
+                                        <option value="2">Admin</option>
+                                    </select>
+                                    @error('type')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
+
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Submit</button>
                         </form>
