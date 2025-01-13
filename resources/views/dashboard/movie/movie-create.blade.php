@@ -7,7 +7,7 @@
         <!-- End Navbar -->
         {{-- redonemovieposter.jpg --}}
         <div class="container-fluid px-2 px-md-4">
-            <div class="page-header min-height-300 border-radius-xl mt-4"
+            <div id="bgImage" class="page-header min-height-300 border-radius-xl mt-4"
                 style="background-image: url('/assets/img/landscape.svg'); background-position: center center; background-size: cover; background-repeat:no-repeat">
                 <span class="mask opacity-6"></span>
             </div>
@@ -31,29 +31,7 @@
                         </div>
                     </div>
                     <div class="card-body p-3">
-                        {{-- @if (session('status'))
-                            <div class="row">
-                                <div class="alert alert-success alert-dismissible text-white" role="alert">
-                                    <span class="text-sm">{{ Session::get('status') }}</span>
-                                    <button type="button" class="btn-close text-lg py-3 opacity-10"
-                                        data-bs-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            </div>
-                        @endif --}}
-                        {{-- @if (Session::has('demo'))
-                            <div class="row">
-                                <div class="alert alert-danger alert-dismissible text-white" role="alert">
-                                    <span class="text-sm">{{ Session::get('demo') }}</span>
-                                    <button type="button" class="btn-close text-lg py-3 opacity-10"
-                                        data-bs-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            </div>
-                        @endif --}}
-                        <form method='POST' action='{{ route('movies.store') }}'>
+                        <form method='POST' action='{{ route('movies.store') }}' enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-6">
@@ -75,62 +53,115 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Director</label>
-                                    <input type="text" name="director" class="form-control border border-2 p-2"
-                                        value=''>
-                                    @error('director')
-                                        <p class='text-danger inputerror'>{{ $message }} </p>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Production</label>
-                                    <input type="text" name="production" class="form-control border border-2 p-2"
-                                        value=''>
-                                    @error('production')
-                                        <p class='text-danger inputerror'>{{ $message }} </p>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3 col-md-12">
-                                    <label for="floatingTextarea2">Description</label>
-                                    <textarea class="form-control border border-2 p-2" placeholder="" id="floatingTextarea2" name="about" rows="4"
-                                        cols="50" name="description"></textarea>
-                                    @error('description')
-                                        <p class='text-danger inputerror'>{{ $message }} </p>
-                                    @enderror
-                                </div>
-
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Select Type</label>
-                                    <select name="type" class="form-select px-3 py-2"
-                                        aria-label="Default select example">
-                                        <option value="1">Movie</option>
-                                        <option value="2">Serie</option>
-                                        <option value="3">TV-Shows</option>
-                                    </select>
-                                    @error('type')
-                                        <p class='text-danger inputerror'>{{ $message }} </p>
-                                    @enderror
-                                </div>
-
-
-                                <div class="mb-3 col-md-6">
                                     <label class="form-label">Trailer Link</label>
-                                    <input type="text" name="production" class="form-control border border-2 p-2"
+                                    <input type="text" name="trailer" class="form-control border border-2 p-2"
                                         value=''>
                                     @error('trailer')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
 
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Production</label>
+                                    <select name="production_id" class="form-select px-3 py-2"
+                                        aria-label="Default select example">
+                                        @foreach ($productions as $production)
+                                            <option value="{{ $production->id }}">{{ $production->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('production_id')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+
                                 <div class="mb-3 col-md-12">
-                                    <label class="form-label" for="customFile">Upload Image Banner</label>
-                                    <input type="file" class="form-control" id="customFile" />
+                                    <label for="floatingTextarea2">Description</label>
+                                    <textarea class="form-control border border-2 p-2" placeholder="" id="floatingTextarea2" rows="4" cols="50"
+                                        name="description"></textarea>
+                                    @error('description')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Director</label>
+                                    <select name="director_id" class="form-select px-3 py-2"
+                                        aria-label="Default select example">
+                                        @foreach ($directors as $director)
+                                            <option value="{{ $director->id }}">{{ $director->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('director_id')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Select Movie Type</label>
+                                    <select name="type_id" class="form-select px-3 py-2"
+                                        aria-label="Default select example">
+                                        @foreach ($types as $type)
+                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('type_id')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label for="exampleSelectMultiple" class="form-label">Upload Image Banner</label>
+                                    <input type="file" name="image" id="" class="form-control"
+                                        onchange="previewBackground(event)">
                                     @error('image')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
+
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label">Actors and Actresses</label>
+                                    <div class="d-flex flex-wrap">
+                                        @foreach ($actors as $actor)
+                                            <div class="me-3">
+                                                <input type="checkbox" name="actors[]" class="border border-2 p-2"
+                                                    value="{{ $actor->id }}">
+                                                <span>{{ $actor->name }}</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    @error('actors')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Give Rating</label>
+                                    <input type="number" name="rating" class="form-control border border-2 p-2"
+                                        value=''>
+                                    @error('rating')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label">Genres</label>
+                                    <div class="d-flex flex-wrap">
+                                        @foreach ($genres as $genre)
+                                            <div class="me-3">
+                                                <input type="checkbox" name="genres[]" class="border border-2 p-2"
+                                                    value="{{ $genre->id }}">
+                                                <span>{{ $genre->name }}</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    @error('genres')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Submit</button>
                         </form>
@@ -143,5 +174,26 @@
         {{-- <x-footers.auth></x-footers.auth> --}}
     </div>
     {{-- <x-plugins></x-plugins> --}}
+
+    <script>
+        function previewBackground(event) {
+            const imageInput = event.target;
+            const bgImageDiv = document.getElementById('bgImage');
+
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    bgImageDiv.style.backgroundImage = `url('${e.target.result}')`;
+                };
+
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                console.log("No file selected or file input is empty.");
+            }
+        }
+    </script>
+
+
 
 </x-layout>

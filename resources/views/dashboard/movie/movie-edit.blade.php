@@ -8,7 +8,7 @@
         {{-- redonemovieposter.jpg --}}
         <div class="container-fluid px-2 px-md-4">
             <div class="page-header min-height-300 border-radius-xl mt-4"
-                style="background-image: url('/assets/img/landscape.svg'); background-position: center center; background-size: cover;">
+                style="background-image: url('/storage/{{ $movie->image }}'); background-position: center center; background-size: cover;">
                 <span class="mask opacity-6"></span>
             </div>
             <div class="card card-body mx-3 mx-md-4 mt-n6">
@@ -31,14 +31,15 @@
                         </div>
                     </div>
                     <div class="card-body p-3">
-                        <form method='POST' action='{{ route('movies.update', ['movie' => 1]) }}'>
+                        <form method='POST' enctype="multipart/form-data"
+                            action='{{ route('movies.update', ['movie' => $movie->id]) }}'>
                             @csrf
                             @method('PUT')
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Title</label>
                                     <input type="text" name="name" class="form-control border border-2 p-2"
-                                        value='{{ old('name') }}'>
+                                        value='{{ old('name', $movie->name) }}'>
                                     @error('name')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -47,69 +48,135 @@
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Released Date</label>
                                     <input type="date" name="release_date" class="form-control border border-2 p-2"
-                                        value='{{ old('release_date') }}'>
+                                        value='{{ old('release_date', $movie->release_date) }}'>
                                     @error('release_date')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Director</label>
-                                    <input type="text" name="director" class="form-control border border-2 p-2"
-                                        value='{{ old('director') }}'>
-                                    @error('director')
+                                    <label class="form-label">Trailer Link</label>
+                                    <input type="text" name="trailer" class="form-control border border-2 p-2"
+                                        value='{{ old('trailer', $movie->trailer) }}'>
+                                    @error('trailer')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Production</label>
-                                    <input type="text" name="production" class="form-control border border-2 p-2"
-                                        value='{{ old('production') }}'>
-                                    @error('production')
+                                    <select name="production_id" class="form-select px-3 py-2"
+                                        aria-label="Default select example">
+                                        @foreach ($productions as $production)
+                                            <option value="{{ $production->id }}"
+                                                {{ $production->id == $movie->production_id ? 'selected' : '' }}>
+                                                {{ $production->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('production_id')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
 
+
                                 <div class="mb-3 col-md-12">
                                     <label for="floatingTextarea2">Description</label>
-                                    <textarea class="form-control border border-2 p-2" placeholder="" id="floatingTextarea2" name="about" rows="4"
-                                        cols="50" name="description" value='{{ old('description') }}'></textarea>
+                                    <textarea class="form-control border border-2 p-2" placeholder="" id="floatingTextarea2" rows="4" cols="50"
+                                        name="description">{{ old('description', $movie->description) }}</textarea>
                                     @error('description')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Select Type</label>
-                                    <select name="type" class="form-select px-3 py-2"
+                                    <label class="form-label">Director</label>
+                                    <select name="director_id" class="form-select px-3 py-2"
                                         aria-label="Default select example">
-                                        <option value="1">Movie</option>
-                                        <option value="2">Serie</option>
-                                        <option value="3">TV-Shows</option>
+                                        @foreach ($directors as $director)
+                                            <option value="{{ $director->id }}"
+                                                {{ $director->id == $movie->director_id ? 'selected' : '' }}>
+                                                {{ $director->name }}</option>
+                                        @endforeach
                                     </select>
-                                    @error('type')
+                                    @error('director_id')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
 
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Select Movie Type</label>
+                                    <select name="type_id" class="form-select px-3 py-2"
+                                        aria-label="Default select example">
+                                        @foreach ($types as $type)
+                                            <option value="{{ $type->id }}"
+                                                {{ $type->id == $movie->type_id ? 'selected' : '' }}>
+                                                {{ $type->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('type_id')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Trailer Link</label>
-                                    <input type="text" name="production" class="form-control border border-2 p-2"
-                                        value='{{ old('trailer') }}'>
-                                    @error('trailer')
+                                    <label for="exampleSelectMultiple" class="form-label">Upload Image Banner</label>
+                                    <input type="file" name="image" id="" class="form-control"
+                                        onchange="previewBackground(event)">
+                                    @error('image')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
 
                                 <div class="mb-3 col-md-12">
-                                    <label class="form-label" for="customFile">Upload Image Banner</label>
-                                    <input type="file" class="form-control" id="customFile" />
-                                    @error('image')
+                                    <label class="form-label">Actors and Actresses</label>
+                                    <div class="d-flex flex-wrap">
+                                        @foreach ($actors as $actor)
+                                            <div class="me-3">
+                                                <input type="checkbox"
+                                                    {{ in_array($actor->id, $movie->actors->pluck('id')->toArray()) ? 'checked' : '' }}
+                                                    name="actors[]" class="border border-2 p-2"
+                                                    value="{{ $actor->id }}">
+                                                <span>{{ $actor->name }}</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+
+                                    @error('actors')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
                                 </div>
+
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Movie Rating</label>
+                                    <input type="number" name="rating" class="form-control border border-2 p-2"
+                                        value="{{ old('rating', $movie->rating) }}">
+                                    @error('rating')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label">Genres</label>
+                                    <div class="d-flex flex-wrap">
+                                        @foreach ($genres as $genre)
+                                            <div class="me-3">
+                                                <input type="checkbox"
+                                                    {{ in_array($genre->id, $movie->genres->pluck('id')->toArray()) ? 'checked' : '' }}
+                                                    name="genres[]" class="border border-2 p-2"
+                                                    value="{{ $genre->id }}">
+                                                <span>{{ $genre->name }}</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    @error('genres')
+                                        <p class='text-danger inputerror'>{{ $message }} </p>
+                                    @enderror
+                                </div>
+
+
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">Submit</button>
                         </form>

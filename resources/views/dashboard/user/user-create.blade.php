@@ -13,7 +13,7 @@
                             {{-- @if ($admin->image)
                                 <img src="{{ $admin->image }}" alt="">
                             @endif --}}
-                            <img src="https://avatar.iran.liara.run/public/15" alt="profile_image"
+                            <img id="avatar" src="https://avatar.iran.liara.run/public/15" alt="profile_image"
                                 class="w-100 border-radius-lg shadow-sm">
                         </div>
                     </div>
@@ -77,7 +77,8 @@
                                 <div class="mb-3 col-md-6">
                                     <div class="mb-3">
                                         <label for="formFile" class="form-label">Upload user image</label>
-                                        <input class="form-control" type="file" id="formFile">
+                                        <input onchange="previewAvatar(event)" name="image" class="form-control"
+                                            type="file" id="formFile">
                                     </div>
                                     @error('image')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
@@ -108,4 +109,28 @@
         {{-- <x-footers.auth></x-footers.auth> --}}
     </div>
     {{-- <x-plugins></x-plugins> --}}
+
+    <script>
+        function previewAvatar() {
+
+            console.log('Avatar Preview');
+
+            const imageInput = event.target;
+            const avatar = document.getElementById('avatar');
+
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    avatar.src = e.target.result;
+                };
+
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                console.log("No file selected or file input is empty.");
+            }
+
+        }
+    </script>
+
 </x-layout>

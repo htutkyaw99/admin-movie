@@ -13,6 +13,19 @@ class Movie extends Model
 
     use SoftDeletes;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'image',
+        'release_date',
+        'rating',
+        'type_id',
+        'director_id',
+        'production_id',
+        'admin_id',
+        'trailer'
+    ];
+
     public function actors(): BelongsToMany
     {
         return $this->belongsToMany(Actor::class);

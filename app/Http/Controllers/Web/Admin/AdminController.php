@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AdminRegisterRequest;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -12,7 +14,11 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('dashboard.user.user-list');
+        $admins = Admin::all();
+
+        return view('dashboard.user.user-list', [
+            'admins' => $admins
+        ]);
     }
 
     /**
@@ -26,9 +32,25 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AdminRegisterRequest $request)
     {
-        dd('Admin Created');
+        $adminData = $request->validated();
+
+        $image = $request->file('image');
+
+        $fileName = time() . '_' . $image->getClientOriginalName();
+
+        $filePath = $image->storeAs('uploads', $fileName);
+
+        $adminData['image'] = $filePath;
+
+        $admin = new Admin($adminData);
+
+        $admin->save();
+
+        dd($admin);
+
+        return redirect()->route('admins.index')->with('info', 'New admin has been granted');
     }
 
     /**
@@ -36,6 +58,7 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
+
         return view('dashboard.user.user-profile');
     }
 
@@ -44,7 +67,11 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        return view('dashboard.user.user-edit');
+        $admin = Admin::findorFail($id);
+
+        return view('dashboard.user.user-edit', [
+            'admin' => $admin
+        ]);
     }
 
     /**
@@ -52,7 +79,7 @@ class AdminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        dd('Admin Updated');
+        dd('Admin Updated', $request->all());
     }
 
     /**

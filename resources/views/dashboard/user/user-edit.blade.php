@@ -10,7 +10,7 @@
                 <div class="row gx-4 mb-2">
                     <div class="col-auto">
                         <div class="avatar avatar-xl position-relative">
-                            <img src="{{ asset('assets') }}/img/bruce-mars.jpg" alt="profile_image"
+                            <img id="avatar" src="{{ asset('assets') }}/img/bruce-mars.jpg" alt="profile_image"
                                 class="w-100 border-radius-lg shadow-sm">
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Name</label>
                                     <input type="text" name="name" class="form-control border border-2 p-2"
-                                        value='{{ old('name') }}'>
+                                        value='{{ old('name', $admin->name) }}'>
                                     @error('name')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -49,7 +49,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Email address</label>
                                     <input type="email" name="email" class="form-control border border-2 p-2"
-                                        value='{{ old('email') }}'>
+                                        value='{{ old('email', $admin->email) }}'>
                                     @error('email')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -76,7 +76,8 @@
                                 <div class="mb-3 col-md-6">
                                     <div class="mb-3">
                                         <label for="formFile" class="form-label">Upload user image</label>
-                                        <input class="form-control" type="file" id="formFile">
+                                        <input class="form-control" type="file" id="formFile" name="image"
+                                            onchange="previewAvatar(event)">
                                     </div>
                                     @error('image')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
@@ -107,5 +108,28 @@
         {{-- <x-footers.auth></x-footers.auth> --}}
     </div>
     {{-- <x-plugins></x-plugins> --}}
+
+    <script>
+        function previewAvatar() {
+
+            console.log('Avatar Preview');
+
+            const imageInput = event.target;
+            const avatar = document.getElementById('avatar');
+
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    avatar.src = e.target.result;
+                };
+
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                console.log("No file selected or file input is empty.");
+            }
+
+        }
+    </script>
 
 </x-layout>

@@ -42,51 +42,53 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <p class="mb-0 text-sm">1</p>
+                                        @foreach ($admins as $admin)
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <p class="mb-0 text-sm">{{ $loop->index + 1 }}</p>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $admin->name ?? 'Jhon' }}/</h6>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm">{{ $admin->name ?? 'Jhon' }}</h6>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">{{ $admin->email ?? 'jhon@gmail.com' }}
-                                                    </h6>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <p class="text-xs text-secondary mb-0">
-                                                    {{ $admin->role->name ?? 'Super Admin' }}
-                                                </p>
-                                            </td>
-                                            <td class="align-middle d-flex">
-                                                <a rel="tooltip" class="btn btn-success btn-link"
-                                                    href="{{ route('admins.edit', ['admin' => 1]) }}"
-                                                    data-original-title="" title="">
-                                                    <i class="material-icons">edit</i>
-                                                    <div class="ripple-container"></div>
-                                                </a>
-                                                <form method="POST"
-                                                    action="{{ route('admins.destroy', ['admin' => 1]) }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-link"
-                                                        style="margin-left: 5px">
-                                                        <i class="material-icons">close</i>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">{{ $admin->email ?? 'jhon@gmail.com' }}
+                                                        </h6>
+                                                    </div>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <p class="text-xs text-secondary mb-0">
+                                                        {{ $admin->role->name ?? 'Super Admin' }}
+                                                    </p>
+                                                </td>
+                                                <td class="align-middle d-flex">
+                                                    <a rel="tooltip" class="btn btn-success btn-link"
+                                                        href="{{ route('admins.edit', ['admin' => 1]) }}"
+                                                        data-original-title="" title="">
+                                                        <i class="material-icons">edit</i>
                                                         <div class="ripple-container"></div>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                                    </a>
+                                                    <form method="POST"
+                                                        action="{{ route('admins.destroy', ['admin' => 1]) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-link"
+                                                            style="margin-left: 5px">
+                                                            <i class="material-icons">close</i>
+                                                            <div class="ripple-container"></div>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

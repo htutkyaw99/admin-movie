@@ -50,17 +50,38 @@
                     <span class="nav-link-text ms-1">Movies</span>
                 </a>
             </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Trashed Items</h6>
+            </li>
+
             <li class="nav-item">
-                <a class="nav-link text-white mt-auto" href="">
+                <a class="nav-link text-white {{ $activePage == 'users-trash' ? ' active bg-gradient-primary' : '' }} "
+                    href="{{ route('admins.index') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        {{-- <i class="material-icons opacity-10">assignment</i> --}}
+                        {{-- <i class="material-icons opacity-10">table_view</i> --}}
                         <span class="material-icons">
-                            logout
+                            delete_outline
                         </span>
                     </div>
-                    <span class="nav-link-text ms-1">Sign Out</span>
+                    <span class="nav-link-text ms-1">Users</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $activePage == 'movies-trash' ? ' active bg-gradient-primary' : '' }}  "
+                    href="{{ route('movies.trash') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        {{-- <i class="material-icons opacity-10">receipt_long</i> --}}
+                        <span class="material-icons">
+                            delete
+                        </span>
+                    </div>
+                    <span class="nav-link-text ms-1">Movies</span>
+                </a>
+            </li>
+
         </ul>
     </div>
 </aside>
