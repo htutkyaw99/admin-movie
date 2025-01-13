@@ -3,9 +3,9 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password as Password;
+use Illuminate\Validation\Rules\Password;
 
-class AdminRegisterRequest extends FormRequest
+class AdminUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,9 @@ class AdminRegisterRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'required|email|unique:admins',
-            'password' => ['required', Password::min(6)->mixedCase()->numbers(), 'regex:/^[a-zA-Z0-9]+$/'],
-            'image' => 'required|image|max:2048',
-            'role_id' => 'required|integer',
+            'password' => ['nullable', Password::min(6)->mixedCase()->numbers(), 'regex:/^[a-zA-Z0-9]+$/'],
+            'image' => 'nullable|image|max:2048',
+            'role_id' => 'nullable|integer',
         ];
     }
 }

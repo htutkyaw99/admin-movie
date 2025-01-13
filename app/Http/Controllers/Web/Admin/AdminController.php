@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminRegisterRequest;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -14,7 +15,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = Admin::all();
+        $admins = Admin::with(['role', 'movies'])->get();
 
         return view('dashboard.user.user-list', [
             'admins' => $admins
@@ -34,23 +35,21 @@ class AdminController extends Controller
      */
     public function store(AdminRegisterRequest $request)
     {
-        $adminData = $request->validated();
+        dd($request->validated());
 
-        $image = $request->file('image');
+        if ($request->hasFile('image')) {
+            $imagepath = Storage::disk('public')->put('admin', $request->image);
+        }
 
-        $fileName = time() . '_' . $image->getClientOriginalName();
+        $movie = Admin::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->email,
+            'image' => $imagepath,
+            'role_id' => $request->role_id,
+        ]);
 
-        $filePath = $image->storeAs('uploads', $fileName);
-
-        $adminData['image'] = $filePath;
-
-        $admin = new Admin($adminData);
-
-        $admin->save();
-
-        dd($admin);
-
-        return redirect()->route('admins.index')->with('info', 'New admin has been granted');
+        return redirect()->route('admins.index');
     }
 
     /**

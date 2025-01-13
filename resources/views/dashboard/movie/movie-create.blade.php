@@ -61,7 +61,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="mb-3 col-md-6">
+                                <div class="mb-3 col-md-6 position-relative">
                                     <label class="form-label">Production</label>
                                     <select name="production_id" class="form-select px-3 py-2"
                                         aria-label="Default select example">

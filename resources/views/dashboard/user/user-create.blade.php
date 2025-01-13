@@ -35,13 +35,13 @@
                         </div>
                     </div>
                     <div class="card-body p-3">
-                        <form method='POST' action='{{ route('admins.store') }}'>
+                        <form method='POST' action='{{ route('admins.store') }}' enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Name</label>
                                     <input type="text" name="name" class="form-control border border-2 p-2"
-                                        value=''>
+                                        value='{{ old('name') }}'>
                                     @error('name')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
@@ -50,7 +50,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Email address</label>
                                     <input type="email" name="email" class="form-control border border-2 p-2"
-                                        value=''>
+                                        value='{{ old('email') }}'>
                                     @error('email')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror
