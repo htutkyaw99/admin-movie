@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Movie;
 
+use App\Api\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Movie\MovieStoreRequest;
 use App\Http\Requests\Movie\MovieUpdateRequest;
@@ -10,26 +11,21 @@ use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+use function Laravel\Prompts\error;
+
 class MovieApiController extends Controller
 {
+    use ResponseTrait;
+
     public function index()
     {
         $movies = Movie::with(['actors', 'genres'])->get();
 
         if ($movies->count() < 1) {
-            return response()->json([
-                'statusCode' => 404,
-                'message' => 'No Movies List',
-            ], 404);
+            return $this->error(404, 'No Movies List');
         }
 
-        return response()->json([
-            'statusCode' => 200,
-            'message' => 'Movie Lists',
-            'count' => $movies->count(),
-            'data' => MovieResource::collection($movies)
-            // 'data' => $movies
-        ], 200);
+        return $this->ok(200, 'Movies List', MovieResource::collection($movies));
     }
 
     public function show($id)
@@ -37,17 +33,10 @@ class MovieApiController extends Controller
         $movie = Movie::find($id);
 
         if (!$movie) {
-            return response()->json([
-                'statusCode' => 404,
-                'message' => 'Movie Not Found',
-            ], 404);
+            return $this->error(404, 'Movie Not Found!');
         }
 
-        return response()->json([
-            'statusCode' => 200,
-            'message' => "Movie name : $movie->name",
-            'data' => new MovieResource($movie)
-        ], 200);
+        return $this->ok(200, "Movie Name : $movie->name", new MovieResource($movie));
     }
 
     public function store(MovieStoreRequest $request)
@@ -72,11 +61,7 @@ class MovieApiController extends Controller
         $movie->actors()->sync($request->actors);
         $movie->genres()->sync($request->genres);
 
-        return response()->json([
-            'statusCode' => 201,
-            'message' => "Movie Created!",
-            'data' => new MovieResource($movie)
-        ], 201);
+        return $this->ok(201, 'Movie Created', new MovieResource($movie));
     }
 
     public function update(MovieUpdateRequest $request, string $id)
@@ -84,10 +69,7 @@ class MovieApiController extends Controller
         $movie = Movie::find($id);
 
         if (!$movie) {
-            return response()->json([
-                'statusCode' => 404,
-                'message' => 'Movie Not Found!',
-            ], 404);
+            return $this->error(404, 'Movie Not Found!');
         }
 
         $imagepath = null;
@@ -112,11 +94,7 @@ class MovieApiController extends Controller
             $movie->actors()->sync($request->actors);
         }
 
-        return response()->json([
-            'statusCode' => 200,
-            'message' => "Movie Edited!",
-            'data' => new MovieResource($movie),
-        ], 200);
+        return $this->ok(200, 'Movie Edited!', new MovieResource($movie));
     }
 
     public function destroy(string $id)
@@ -124,18 +102,12 @@ class MovieApiController extends Controller
         $movie = Movie::find($id);
 
         if (!$movie) {
-            return response()->json([
-                'statusCode' => 404,
-                'message' => 'Movie Not Found!',
-            ], 404);
+            return $this->error(404, 'Movie Not Found!');
         }
 
         $movie->delete();
 
-        return response()->json([
-            'statusCode' => 200,
-            'message' => "Movie Deleted!",
-        ], 200);
+        return $this->ok(200, 'Movie Deleted!');
     }
 
     public function trash()
@@ -143,17 +115,10 @@ class MovieApiController extends Controller
         $movies = Movie::onlyTrashed()->get();
 
         if ($movies->count() < 1) {
-            return response()->json([
-                'statusCode' => 404,
-                'message' => "No items in trash!",
-            ], 404);
+            return $this->error(404, 'No Itmes in trash');
         }
 
-        return response()->json([
-            'statusCode' => 200,
-            'message' => "Movie List in Trash!",
-            'data' => MovieResource::collection($movies)
-        ], 200);
+        return $this->ok(200, 'Movies List in trash', MovieResource::collection($movies));
     }
 
     public function delete($id)
@@ -161,10 +126,7 @@ class MovieApiController extends Controller
         $movie = Movie::withTrashed()->find($id);
 
         if (!$movie) {
-            return response()->json([
-                'statusCode' => 404,
-                'message' => "Not Found!",
-            ], 404);
+            return $this->error(404, "Movie Not Found!");
         }
 
         $movie->actors()->detach();
@@ -173,10 +135,7 @@ class MovieApiController extends Controller
 
         $movie->forceDelete();
 
-        return response()->json([
-            'statusCode' => 200,
-            'message' => "Movie deleted permantly!",
-        ], 200);
+        return $this->ok(200, 'Movie Deleted Permanantly!');
     }
 
     public function restore(string $id)
@@ -184,17 +143,11 @@ class MovieApiController extends Controller
         $movie = Movie::withTrashed()->find($id);
 
         if (!$movie) {
-            return response()->json([
-                'statusCode' => 404,
-                'message' => "Not Found!",
-            ], 404);
+            return $this->error(404, "Movie Not Found!");
         }
 
         $movie->restore();
 
-        return response()->json([
-            'statusCode' => 200,
-            'message' => "Movie restored!!",
-        ], 200);
+        return $this->ok(200, 'Movie Restored!');
     }
 }

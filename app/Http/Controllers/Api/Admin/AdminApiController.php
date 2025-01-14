@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Api\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminRegisterRequest;
 use App\Http\Requests\Admin\AdminUpdateRequest;
@@ -13,23 +14,17 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminApiController extends Controller
 {
+    use ResponseTrait;
+
     public function index()
     {
         $admins = Admin::with(['role', 'movies'])->get();
 
         if (!$admins) {
-            return response()->json([
-                'statusCode' => 404,
-                'message' => 'No Users List',
-            ], 404);
+            return $this->error(404, 'User List Not Found!');
         }
 
-        return response()->json([
-            'statusCode' => 200,
-            'message' => 'User Lists',
-            'count' => $admins->count(),
-            'data' => UserResource::collection($admins)
-        ], 200);
+        return $this->ok(200, 'Users List', UserResource::collection($admins));
     }
 
     public function show($id)
@@ -37,17 +32,10 @@ class AdminApiController extends Controller
         $admin = Admin::find($id);
 
         if (!$admin) {
-            return response()->json([
-                'statusCode' => 404,
-                'message' => 'User Not Found',
-            ], 404);
+            return $this->error(404, 'User Not Found!');
         }
 
-        return response()->json([
-            'statusCode' => 200,
-            'message' => "User $id",
-            'data' => new UserResource($admin)
-        ], 200);
+        return $this->ok(200, "User $id", new UserResource($admin));
     }
 
     public function store(AdminRegisterRequest $request)
@@ -64,21 +52,15 @@ class AdminApiController extends Controller
             'role_id' => $request->role_id,
         ]);
 
-        return response()->json([
-            'statusCode' => 201,
-            'message' => "User Created!",
-            'data' => new UserResource($admin)
-        ], 201);
+        return $this->ok(201, "User Created", new UserResource($admin));
     }
 
     public function update(AdminUpdateRequest $request, string $id)
     {
         $admin = Admin::find($id);
+
         if (!$admin) {
-            return response()->json([
-                'statusCode' => 404,
-                'message' => 'User Not Found!',
-            ], 404);
+            return $this->error(404, 'User Not Found!');
         }
 
         $imagepath = null;
@@ -103,11 +85,7 @@ class AdminApiController extends Controller
 
         $admin->update($updateData);
 
-        return response()->json([
-            'statusCode' => 200,
-            'message' => "User Edited!",
-            'data' => new UserResource($admin),
-        ], 200);
+        return $this->ok(200, 'User Edited', new UserResource($admin));
     }
 
     public function destroy(string $id)
@@ -115,17 +93,11 @@ class AdminApiController extends Controller
         $admin = Admin::find($id);
 
         if (!$admin) {
-            return response()->json([
-                'statusCode' => 404,
-                'message' => 'User Not Found!',
-            ], 404);
+            return $this->error(404, 'User Not Found!');
         }
 
         $admin->delete();
 
-        return response()->json([
-            'statusCode' => 200,
-            'message' => "User Deleted!",
-        ], 200);
+        return $this->ok(200, 'User Deleted');
     }
 }
