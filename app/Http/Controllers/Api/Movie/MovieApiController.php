@@ -132,13 +132,69 @@ class MovieApiController extends Controller
 
         $movie->delete();
 
+        return response()->json([
+            'statusCode' => 200,
+            'message' => "Movie Deleted!",
+        ], 200);
+    }
+
+    public function trash()
+    {
+        $movies = Movie::onlyTrashed()->get();
+
+        if ($movies->count() < 1) {
+            return response()->json([
+                'statusCode' => 404,
+                'message' => "No items in trash!",
+            ], 404);
+        }
+
+        return response()->json([
+            'statusCode' => 200,
+            'message' => "Movie List in Trash!",
+            'data' => MovieResource::collection($movies)
+        ], 200);
+    }
+
+    public function delete($id)
+    {
+        $movie = Movie::withTrashed()->find($id);
+
+        if (!$movie) {
+            return response()->json([
+                'statusCode' => 404,
+                'message' => "Not Found!",
+            ], 404);
+        }
+
         $movie->actors()->detach();
 
         $movie->genres()->detach();
 
+        $movie->forceDelete();
+
         return response()->json([
             'statusCode' => 200,
-            'message' => "Movie Deleted!",
+            'message' => "Movie deleted permantly!",
+        ], 200);
+    }
+
+    public function restore(string $id)
+    {
+        $movie = Movie::withTrashed()->find($id);
+
+        if (!$movie) {
+            return response()->json([
+                'statusCode' => 404,
+                'message' => "Not Found!",
+            ], 404);
+        }
+
+        $movie->restore();
+
+        return response()->json([
+            'statusCode' => 200,
+            'message' => "Movie restored!!",
         ], 200);
     }
 }

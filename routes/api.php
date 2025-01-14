@@ -18,9 +18,13 @@ Route::prefix('users')->group(function () {
     Route::delete('/{id}', [AdminApiController::class, 'destroy'])->name('apiUser.delete');
 });
 
+//movies
 Route::prefix('movies')->group(function () {
     Route::get('', [MovieApiController::class, 'index'])->name('apiMovie.list');
     Route::post('', [MovieApiController::class, 'store'])->name('apiMovie.store');
+    Route::get('/trash', [MovieApiController::class, 'trash'])->name('apiMovie.trash');
+    Route::delete('/trash/{id}', [MovieApiController::class, 'delete'])->name('apiMovie.forcedelete');
+    Route::post('/trash/{id}', [MovieApiController::class, 'restore'])->name('apiMovie.restore');
     Route::get('/{id}', [MovieApiController::class, 'show'])->name('apiMovie.details');
     Route::put('/{id}', [MovieApiController::class, 'update'])->name('apiMovie.update');
     Route::delete('/{id}', [MovieApiController::class, 'destroy'])->name('apiMovie.delete');
