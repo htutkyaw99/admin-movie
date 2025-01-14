@@ -56,6 +56,11 @@ class Movie extends Model
         return $this->belongsTo(Admin::class);
     }
 
+    public function faveduser()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     // public function admins()
     // {
     //     return $this->belongsToMany(Admin::class);

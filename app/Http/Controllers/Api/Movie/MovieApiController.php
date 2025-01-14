@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Movie\MovieStoreRequest;
 use App\Http\Requests\Movie\MovieUpdateRequest;
 use App\Http\Resources\MovieResource;
+use App\Models\FavouriteMovie;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -78,11 +79,11 @@ class MovieApiController extends Controller
             $imagepath = Storage::disk('public')->put('movies', $request->image);
         }
 
-        $updateData = $request->validated();
-
         if ($imagepath) {
             $updateData['image'] = $imagepath;
         }
+
+        $updateData = $request->validated();
 
         $movie->update($updateData);
 
@@ -149,5 +150,36 @@ class MovieApiController extends Controller
         $movie->restore();
 
         return $this->ok(200, 'Movie Restored!');
+    }
+
+    public function favourite(Request $request, $id)
+    {
+        $user = $request->user();
+
+        if ($user->favmovies->contains('id', $id)) {
+
+            $user->favmovies()->detach($id);
+
+            return $this->ok(201, "Removed from favorites!");
+        }
+
+        $user->favmovies()->attach($id);
+
+        return $this->ok(201, "Added to favorites!");
+    }
+
+
+    public function favourite_list(Request $request)
+    {
+        $user = $request->user();
+
+        $favoriteMovies = $user->favmovies;
+
+        if ($favoriteMovies->count() < 1) {
+
+            return $this->error(404, "No Fav movies");
+        }
+
+        return $this->ok(200, 'Fetched favorite movies successfully!', $favoriteMovies);
     }
 }
