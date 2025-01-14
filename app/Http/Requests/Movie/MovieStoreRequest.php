@@ -31,9 +31,9 @@ class MovieStoreRequest extends FormRequest
             'director_id' => 'required|exists:directors,id',
             'production_id' => 'required|exists:productions,id',
             'trailer' => 'required|string',
-            'actors' => 'required',
+            'actors' => 'required|array',
             'actors.*' => 'required|exists:actors,id',
-            'genres' => 'required',
+            'genres' => 'required|array',
             'genres.*' => 'required|exists:genres,id',
         ];
     }
