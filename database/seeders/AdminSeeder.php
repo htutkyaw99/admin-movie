@@ -19,7 +19,6 @@ class AdminSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
-            'image' => fake()->text(200),
             'role_id' => 1
         ]);
 

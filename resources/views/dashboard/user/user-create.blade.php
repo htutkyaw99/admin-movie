@@ -87,7 +87,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Select Role</label>
-                                    <select name="type" class="form-select px-3 py-2"
+                                    <select name="role_id" class="form-select px-3 py-2"
                                         aria-label="Default select example">
                                         <option value="1">Super Admin</option>
                                         <option value="2">Admin</option>

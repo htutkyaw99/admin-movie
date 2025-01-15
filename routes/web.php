@@ -15,18 +15,23 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-//users
-
-Route::resource('admins', AdminController::class);
-
 //Trash route
+
+Route::get('/admins/trash', [AdminController::class, 'trash'])->name('admins.trash');
+
+Route::delete('/admins/trash/{admin}', [AdminController::class, 'delete'])->name('admins.force');
+
+Route::post('/admins/restore/{admin}', [AdminController::class, 'restore'])->name('admins.restore');
 
 Route::get('/movies/trash', [MovieController::class, 'trash'])->name('movies.trash');
 
-Route::delete('/movies/trash/{movie}', [MovieController::class, 'delete'])->name('movies.force');
+Route::delete('/movies/trash/{id}', [MovieController::class, 'delete'])->name('movies.force');
 
-Route::post('/movies/restore/{movie}', [MovieController::class, 'restore'])->name('movies.restore');
+Route::post('/movies/restore/{id}', [MovieController::class, 'restore'])->name('movies.restore');
 
+//users
+
+Route::resource('admins', AdminController::class);
 
 //movies
 

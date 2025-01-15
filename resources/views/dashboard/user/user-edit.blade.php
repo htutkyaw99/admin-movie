@@ -10,8 +10,9 @@
                 <div class="row gx-4 mb-2">
                     <div class="col-auto">
                         <div class="avatar avatar-xl position-relative">
-                            <img id="avatar" src="{{ asset('assets') }}/img/bruce-mars.jpg" alt="profile_image"
-                                class="w-100 border-radius-lg shadow-sm">
+                            <img id="avatar"
+                                src="{{ !is_null($admin->image) ? asset('storage/' . $admin->image) : asset('assets/img/drake.jpg') }}"
+                                alt="profile_image" class="w-100 border-radius-lg shadow-sm">
                         </div>
                     </div>
                     <div class="col-auto my-auto">
@@ -32,7 +33,8 @@
                         </div>
                     </div>
                     <div class="card-body p-3">
-                        <form method='POST' action='{{ route('admins.update', ['admin' => 1]) }}'>
+                        <form enctype="multipart/form-data" method='POST'
+                            action='{{ route('admins.update', ['admin' => 1]) }}'>
                             @csrf
                             @method('PUT')
                             <div class="row">
@@ -86,7 +88,7 @@
 
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">Select Role</label>
-                                    <select name="type" class="form-select px-3 py-2"
+                                    <select name="role_id" class="form-select px-3 py-2"
                                         aria-label="Default select example">
                                         <option value="1">Super Admin</option>
                                         <option value="2">Admin</option>

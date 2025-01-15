@@ -90,20 +90,22 @@
                                                             @csrf
                                                             <button type="button" class="btn btn-success btn-link"
                                                                 style="margin-left: 5px" data-bs-toggle="modal"
-                                                                data-bs-target="#restoreModal">
+                                                                data-bs-target="#restoreModal{{ $movie->id }}">
                                                                 <span class="material-icons">
                                                                     settings_backup_restore
                                                                 </span>
                                                                 <div class="ripple-container"></div>
                                                             </button>
 
-                                                            <div class="modal fade" id="restoreModal" tabindex="-1"
-                                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal fade" id="restoreModal{{ $movie->id }}"
+                                                                tabindex="-1"
+                                                                aria-labelledby="restoreModal{{ $movie->id }}"
+                                                                aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
                                                                             <h5 class="modal-title"
-                                                                                id="exampleModalLabel">
+                                                                                id="restoreModal{{ $movie->id }}">
                                                                                 Confirmed?</h5>
                                                                             <button type="button" class="btn-close"
                                                                                 data-bs-dismiss="modal"
@@ -132,19 +134,21 @@
                                                             @method('DELETE')
                                                             <button type="button" class="btn btn-danger btn-link"
                                                                 style="margin-left: 5px" data-bs-toggle="modal"
-                                                                data-bs-target="#deleteModal">
+                                                                data-bs-target="#deleteModal{{ $movie->id }}">
                                                                 <i class="material-icons">close</i>
                                                                 <div class="ripple-container"></div>
                                                             </button>
 
                                                             <!-- Modal -->
-                                                            <div class="modal fade" id="deleteModal" tabindex="-1"
-                                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal fade" id="deleteModal{{ $movie->id }}"
+                                                                tabindex="-1"
+                                                                aria-labelledby="deleteModal{{ $movie->id }}"
+                                                                aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
                                                                             <h5 class="modal-title"
-                                                                                id="exampleModalLabel">
+                                                                                id="deleteModal{{ $movie->id }}">
                                                                                 Confirmed?</h5>
                                                                             <button type="button" class="btn-close"
                                                                                 data-bs-dismiss="modal"

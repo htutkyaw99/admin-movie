@@ -7,8 +7,9 @@
         <!-- End Navbar -->
         {{-- redonemovieposter.jpg --}}
         <div class="container-fluid px-2 px-md-4">
-            <div class="page-header min-height-300 border-radius-xl mt-4"
-                style="background-image: url('/storage/{{ $movie->image }}'); background-position: center center; background-size: cover;">
+            <div class="page-header min-height-300 border-radius-xl mt-4" id="bgImage"
+                style="{{ $movie->image ? "background-image: url('/storage/$movie->image');" : "background-image: url('/assets/img/meeting.jpg');" }};
+                background-position: center center; background-size: cover;">
                 <span class="mask opacity-6"></span>
             </div>
             <div class="card card-body mx-3 mx-md-4 mt-n6">
@@ -189,5 +190,24 @@
         {{-- <x-footers.auth></x-footers.auth> --}}
     </div>
     {{-- <x-plugins></x-plugins> --}}
+
+    <script>
+        function previewBackground(event) {
+            const imageInput = event.target;
+            const bgImageDiv = document.getElementById('bgImage');
+
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    bgImageDiv.style.backgroundImage = `url('${e.target.result}')`;
+                };
+
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                console.log("No file selected or file input is empty.");
+            }
+        }
+    </script>
 
 </x-layout>

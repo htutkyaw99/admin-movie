@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Web\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminRegisterRequest;
+use App\Http\Requests\Admin\AdminUpdateRequest;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
+use function PHPUnit\Framework\isNull;
 
 class AdminController extends Controller
 {
@@ -35,7 +38,7 @@ class AdminController extends Controller
      */
     public function store(AdminRegisterRequest $request)
     {
-        dd($request->validated());
+        // dd($request->validated());
 
         if ($request->hasFile('image')) {
             $imagepath = Storage::disk('public')->put('admin', $request->image);
@@ -66,7 +69,10 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
+
         $admin = Admin::findorFail($id);
+
+        // dd($admin);
 
         return view('dashboard.user.user-edit', [
             'admin' => $admin
@@ -76,16 +82,78 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+
+
+    public function update(AdminUpdateRequest $request, string $id)
     {
-        dd('Admin Updated', $request->all());
+        $updateData = array_filter($request->validated(), function ($value) {
+            return !is_null($value);
+        });
+
+        // dd($updateData);
+
+        $admin = Admin::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+
+            if ($admin->image) {
+                Storage::disk('public')->delete($admin->image);
+            }
+
+            $updateData['image'] = Storage::disk('public')->put('admin', $request->image);
+        }
+
+        $admin->update($updateData);
+
+        return redirect()->route('admins.index');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        dd('Admin Deleted');
+        // dd('Admin Deleted');
+
+        $admin = Admin::findOrFail($id);
+
+        $admin->delete();
+
+        if ($admin->image) {
+            Storage::disk('public')->delete($admin->image);
+        }
+
+        return redirect()->route('admins.index');
+    }
+
+    public function trash()
+    {
+        $admins = Admin::onlyTrashed()->get();
+
+        return view('dashboard.user.user-trash-list', ['admins' => $admins]);
+    }
+
+    public function delete($id)
+    {
+        $admin = Admin::onlyTrashed()->findOrFail($id);
+
+        if ($admin->image) {
+            Storage::disk('public')->delete($admin->image);
+        }
+
+        $admin->forceDelete();
+
+        return redirect()->route('admins.trash');
+    }
+
+    public function restore($id)
+    {
+
+        $admin = Admin::onlyTrashed()->findOrFail($id);
+
+        $admin->restore();
+
+        return redirect()->route('admins.index');
     }
 }

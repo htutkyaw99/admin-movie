@@ -7,12 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Movie\MovieStoreRequest;
 use App\Http\Requests\Movie\MovieUpdateRequest;
 use App\Http\Resources\MovieResource;
-use App\Models\FavouriteMovie;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
-use function Laravel\Prompts\error;
 
 class MovieApiController extends Controller
 {
@@ -168,7 +165,6 @@ class MovieApiController extends Controller
         return $this->ok(201, "Added to favorites!");
     }
 
-
     public function favourite_list(Request $request)
     {
         $user = $request->user();
@@ -180,6 +176,6 @@ class MovieApiController extends Controller
             return $this->error(404, "No Fav movies");
         }
 
-        return $this->ok(200, 'Fetched favorite movies successfully!', $favoriteMovies);
+        return $this->ok(200, 'Fav movies list',  MovieResource::collection($favoriteMovies));
     }
 }

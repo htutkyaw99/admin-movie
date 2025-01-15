@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->foreignId('role_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

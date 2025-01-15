@@ -19,7 +19,6 @@ class MovieFactory extends Factory
         return [
             'name' => fake()->sentence(7),
             'description' => fake()->text(),
-            'image' => fake()->url(),
             'release_date' => fake()->date(),
             'rating' => rand(4, 10),
             'trailer' => fake()->url(),

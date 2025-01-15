@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-//users
+//admin
 Route::prefix('users')->group(function () {
     Route::get('', [AdminApiController::class, 'index'])->name('apiUser.list');
     Route::post('', [AdminApiController::class, 'store'])->name('apiUser.store');
@@ -20,7 +20,6 @@ Route::prefix('users')->group(function () {
 });
 
 //users
-
 Route::prefix('users')->group(function () {
     Route::post('/register', [UserController::class, 'register']);
     Route::post('/login', [UserController::class, 'login']);

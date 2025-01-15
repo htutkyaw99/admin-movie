@@ -24,7 +24,7 @@ class AdminUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'email' => 'required|email|unique:admins',
+            'email' => 'required|email',
             'password' => ['nullable', Password::min(6)->mixedCase()->numbers(), 'regex:/^[a-zA-Z0-9]+$/'],
             'image' => 'nullable|image|max:2048',
             'role_id' => 'nullable|integer',

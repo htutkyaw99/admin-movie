@@ -119,19 +119,20 @@ class MovieController extends Controller
      */
     public function update(MovieUpdateRequest $request, Movie $movie)
     {
+        $updateData = array_filter($request->validated(), function ($value) {
+            return !is_null($value);
+        });
+
         if ($request->hasFile('image')) {
-            $movie->image = Storage::disk('public')->put('movies', $request->image);
+
+            if ($movie->image) {
+                Storage::disk('public')->delete($movie->image);
+            }
+            $updateData['image'] = Storage::disk('public')->put('movies', $request->image);
         }
 
-        $movie->name = $request->name;
-        $movie->description = $request->description;
-        $movie->release_date = $request->release_date;
-        $movie->rating = $request->rating;
-        $movie->type_id = $request->type_id;
-        $movie->director_id = $request->director_id;
-        $movie->production_id = $request->production_id;
-        $movie->trailer = $request->trailer;
-        $movie->update();
+        $movie->update($updateData);
+
         $movie->actors()->sync($request->actors);
         $movie->genres()->sync($request->genres);
 
@@ -163,11 +164,15 @@ class MovieController extends Controller
 
     public function delete($id)
     {
-        $movie = Movie::withTrashed()->find($id);
+        $movie = Movie::withTrashed()->findOrFail($id);
 
         $movie->actors()->detach();
 
         $movie->genres()->detach();
+
+        if ($movie->image) {
+            Storage::disk('public')->delete($movie->image);
+        }
 
         $movie->forceDelete();
 
